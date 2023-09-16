@@ -1,0 +1,7 @@
+daemonize
+image=:~/.config/swaylock/trippy.jpg
+scaling=stretch
+ring-color=4c2fda
+indicator-radius=200
+fade-in=0.2
+key-hl-color=fda900
