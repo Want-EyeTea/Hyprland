@@ -1,0 +1,43 @@
+[global_config]
+  tab_position = bottom
+  suppress_multiple_term_dialog = True
+[keybindings]
+  new_tab = <Primary><Shift>a
+  cycle_next = <Primary>Tab
+  split_auto = F12
+  toggle_scrollbar = F7
+  edit_window_title = <Primary><Alt>x
+  edit_tab_title = <Primary><Shift>s
+  edit_terminal_title = <Primary><Alt>quotedbl
+[profiles]
+  [[default]]
+    background_color = "#24273a"
+    background_darkness = 0.85
+    background_type = transparent
+    background_image = None
+    font = JetBrainsMonoNL Nerd Font Propo Semi-Bold 13
+    foreground_color = "#cad3f5"
+    show_titlebar = False
+    scrollback_infinite = True
+    palette = "#494d64:#ed8796:#a6da95:#eed49f:#8aadf4:#f5bde6:#8bd5ca:#b8c0e0:#5b6078:#ed8796:#a6da95:#eed49f:#8aadf4:#f5bde6:#8bd5ca:#a5adcb"
+    use_system_font = False
+[layouts]
+  [[default]]
+    [[[child0]]]
+      type = Window
+      parent = ""
+      order = 0
+      position = 0:0
+      maximised = True
+      fullscreen = False
+      size = 949, 529
+      title = admin@arch:~
+      last_active_term = 878206b3-4934-4e09-9fd5-a6ec1b50373a
+      last_active_window = True
+    [[[terminal1]]]
+      type = Terminal
+      parent = child0
+      order = 0
+      profile = default
+      uuid = 878206b3-4934-4e09-9fd5-a6ec1b50373a
+[plugins]
