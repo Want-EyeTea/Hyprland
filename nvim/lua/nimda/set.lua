@@ -13,3 +13,4 @@ vim.opt.smartindent = true
 vim.opt.wrap = false
 
 vim.cmd("syntax on")
+

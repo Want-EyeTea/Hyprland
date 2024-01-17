@@ -8,7 +8,7 @@
 }
 
 window#waybar {
-    background: rgba(21, 18, 27, 0);
+    background: rgba(21, 18, 27, 5);
     color: #cdd6f4;
 }
 
@@ -118,8 +118,19 @@ tooltip {
     border-left: 0px;
 }
 
+#keyboard-state label {
+    color: #ef0225;
+    margin-right: 20px;
+}
+
+#backlight {
+    color: #ef6902;
+    margin-right: 10px;
+}
+
 /* Quicklinks */
 #custom-chatgpt {
 	margin-left: 15px;
 	font-size: 14px;
 }
+
