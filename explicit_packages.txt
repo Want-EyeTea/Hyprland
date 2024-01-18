@@ -1,5 +1,3 @@
-base
-base-devel
 bitwarden
 cifs-utils
 cliphist
@@ -12,9 +10,6 @@ gtk3
 gvfs
 hyprland
 less
-linux
-linux-firmware
-linux-headers
 lvm2
 lxappearance
 mako
@@ -50,7 +45,6 @@ terminator
 thunar
 ttf-font-awesome
 ttf-jetbrains-mono-nerd
-vim
 waybar
 wireplumber
 wl-clipboard
