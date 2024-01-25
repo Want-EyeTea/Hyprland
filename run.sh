@@ -1,0 +1,4 @@
+sudo pacman -S bitwarden cifs-utils cliphist dosfstools feh firefox git grim gtk3 gvfs hyprland less lvm2 lxappearance mako man-db man-pages neovim network-manager-applet networkmanager networkmanager-openvpn nfs-utils noto-fonts-emoji nvidia-dkms nvidia-settings openvpn pacman-contrib pamixer pavucontrol polkit-gnome pulseaudio python-requests qt5-graphicaleffects qt5-quickcontrols2 qt5-svg qt5-wayland qt5ct qt6ct slurp starship sudo swappy swaybg terminator thunar ttf-font-awesome ttf-jetbrains-mono-nerd waybar wireplumber wl-clipboard wofi xdg-desktop-portal-hyprland xfce4-settings  
+
+
+echo Install yay, and then install sddm-git, wlogout, nwg-look, and reboot
