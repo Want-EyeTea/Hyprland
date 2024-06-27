@@ -62,7 +62,12 @@ sudo swapon /mnt/.swapfile
 ## Generate Nixos Config
 sudo nixos-generate-config --root /mnt
 cd /mnt/etc/nixos/
-#### Copy over pre-configured configuration.nix file at this point, and skip to `Install`. Or continue if setting up from scratch.
+#### Copy over pre-configured configuration.nix file at this point. Update the UUID for the encrypted drive: 
+#### Get current UUID: In vim command mode - :read ! blkid /dev/[YOUR_ROOT_PARTITION]
+#### Copy/paste UUID into `boot.initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/[UUID]";`, and delete the blkid line.
+#### Jump to `Install`
+
+#### To setup from scratch, continue:
 sudo vim configuration.nix
 
 Most essential changes:
