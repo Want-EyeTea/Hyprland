@@ -1,0 +1,8 @@
+daemonize
+image=:~/.config/swaylock/dark.jpg
+scaling=stretch
+ring-color=8331db
+indicator-radius=100
+fade-in=0.2
+key-hl-color=ffffff
+line-color=ffffff
