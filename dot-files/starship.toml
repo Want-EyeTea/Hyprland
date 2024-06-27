@@ -72,7 +72,7 @@ time_format = "%T"
 
 [custom.time_utc] # Display current time as UTC
 command = "date -u +'%Y-%m-%d %H:%M:%S UTC'"
-when = false # To enable set to true
+when = true # To enable set to true
 style = "bold green"
 
 # Prompt: param 2
