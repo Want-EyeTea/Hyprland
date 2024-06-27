@@ -62,6 +62,7 @@ sudo swapon /mnt/.swapfile
 ## Generate Nixos Config
 sudo nixos-generate-config --root /mnt
 cd /mnt/etc/nixos/
+#### Copy over pre-configured configuration.nix file at this point, and skip to `Install`. Or continue if setting up from scratch.
 sudo vim configuration.nix
 
 Most essential changes:
