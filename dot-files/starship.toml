@@ -70,9 +70,9 @@ format = " 🕙 $time($style)\n"
 style = "bright-white"
 time_format = "%T"
 
-[custom.time_utc]
+[custom.time_utc] # Display current time as UTC
 command = "date -u +'%Y-%m-%d %H:%M:%S UTC'"
-when = false
+when = false # To enable set to true
 style = "bold green"
 
 # Prompt: param 2

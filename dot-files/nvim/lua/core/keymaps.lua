@@ -39,7 +39,7 @@ keymap.set("n", "<leader>sh", "<C-w><5") -- make split windows width smaller
 
 -- Tab management
 keymap.set("n", "<leader>to", ":tabnew<CR>") -- open a new tab
-keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close a tab
+keymap.set("n", "<leader>tq", ":tabclose<CR>") -- close a tab
 keymap.set("n", "<leader>tn", ":tabn<CR>") -- next tab
 keymap.set("n", "<leader>tp", ":tabp<CR>") -- previous tab
 

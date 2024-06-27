@@ -1,13 +1,25 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+#----=[ QUICK JUMP ]----#
+
+# PACKAGES: 142
+# SERVICES: 265
+# ENVIRONMENT VARIABLES: 343
+# PRINTER: 94
+# SOUND: 111
+
+#----==========================----#
 
 { config, lib, pkgs, ... }:
 
-#----=[ DECLARING NIX VARIABLES ]=----#
+  #----=[ VARIABLES ]=----#
 
+let
+  unstable = import <unstable> {};
+in
+
+  #----==========================----#
+  
 {
-  # CONFIGURATION TITLE (This doesn't work)
+  # CONFIGURATION TITLE ( This does nothing )
   boot.loader.grub.configurationName = "Hyprland_PERFECT";
 
 
@@ -24,7 +36,7 @@
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "nodev";
   boot.loader.grub.efiSupport = true;
-  boot.initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/fc5c925c-e877-4bad-bcb9-b2c7faa08472";
+  boot.initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/a3a4c4da-a290-4ac6-a093-5662b2a3b394";
 
   #----==========================----#
 
@@ -35,27 +47,29 @@
   # Pick only ONE of the below networking options.
 
   ## Wireless
-  networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-  # Store Wireless Connection:
-  networking.wireless.networks = {
-    "" = {
-      hidden = true;
-      psk = "";
-    };
-  };
+  ## Store Wireless Connection:
+  #networking.wireless.networks = {
+  #  "" = {
+  #    hidden = true;
+  #    psk = "";
+  #  };
+  #};
 
   ## LAN 
-  #networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   
   ## VPN
   
 
-  # Configure network proxy if necessary
+  ## PROXY SETTINGS
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   #----==========================----#
+
+  #----=[ LANGUAGE FORMATTING ]=----#
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
@@ -75,10 +89,22 @@
   services.xserver.xkb.layout = "us";
   # services.xserver.xkb.options = "eurosign:e,caps:escape";
 
-  #----=[ PRINTING SETTINGS ]=----#
+  #----==========================----#
+
+  #----=[ PRINTER SETTINGS ]=----#
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
+
+  # Enable Auto-Detect
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+
+  # Install Drivers
+  services.printing.drivers = [ pkgs.brgenml1cupswrapper pkgs.brgenml1lpr ];
 
   #----==========================----#
 
@@ -93,24 +119,19 @@
     pulse.enable = true;
     jack.enable = true;
   };
-  # hardware.pulseaudio.enable = true;
 
   #----==========================----#
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   #----=[ USERS & GROUPS ]=----#
 
-  # Define Users. Don't forget to set a password with ‘passwd’.
+  # Define Users
   users.users.admin = {
-    initialPassword = "nimda";
+    initialPassword = "nimda"; # You will change this after initial install
     isNormalUser = true;
     group = "admin";
-    extraGroups = [ "wheel" "networkmanager" "audio" "video" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" "audio" "video" "docker" ]; 
     packages = with pkgs; [
-     firefox
-     tree
     ];
   };
   # Define Groups
@@ -129,14 +150,22 @@
     "electron-29.4.0"
   ];
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search PACKAGE_NAME
+  # Package Overrides (Adding the NUR repository)
+  nixpkgs.config.packageOverrides = pkgs: {
+    nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
+      inherit pkgs;
+    };
+  };
+
 
   environment.systemPackages = with pkgs; [
+    firefox
+    chromium
+    tree
     neovim    
+    python313
     wget
     git
-    bitwarden	# password manager
     dig
     nmap
     floorp 	# Web testing browser
@@ -156,7 +185,7 @@
     libreoffice-fresh
     pipx
     nodePackages.npm
-    z-lua
+    zoxide # Better cd
     netcat-openbsd
     google-chrome
     veracrypt
@@ -165,7 +194,15 @@
     file
     pipenv
     eza		# Better ls
-    bat   # Better cat
+    bat   	# Better cat
+    obs-studio
+    killall
+    zoom-us
+    waydroid  # Android Emulator
+    nur.repos.ataraxiasjel.waydroid-script
+    android-tools
+    xdg-utils
+    unstable.zig_0_12
     # Web Testing 
     feroxbuster
     ffuf
@@ -175,7 +212,7 @@
     networkmanager_strongswan
     networkmanager-l2tp
     # HYPRLAND SPECIFIC PKGS #
-    waybar
+    waybar # Utility Bar
     mako	# Notification Daemon
     wofi	# Application Manager
     kitty	# Terminal
@@ -227,22 +264,40 @@
 
   #----=[ SERVICES ]=----#
 
-  # List services that you want to enable:
+  # List services to enable:
 
-  # Enable the OpenSSH daemon.
+  #----=( OPENSSH )=----#
   services.openssh.enable = true;
 
+  #----=( XSERVER )=----#
   services.xserver.upscaleDefaultCursor = true;
   services.xserver.dpi = true;
 
-  # Strongswan Specific
+  #----=( STRONGSWAN )=----#
   services.strongswan.enable = true;
   services.strongswan.secrets = ["/etc/ipsec.d/ipsec.nm-l2tp.secrets"];
 
-  # Flatpak
+  #----=( DOCKER )=----#
+  virtualisation.docker.enable = true;
+
+  #----=( FLATPAK )=----#
   services.flatpak.enable = true;
   
+  ### Install Flathub Repo:
+  # flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+  ### Install Apps:
+  # flatpak install flathub com.bitwarden.desktop
+
+  #----=( WAYDROID )=----#
+  virtualisation.waydroid.enable = true;
+
+  #----=( TOUCHPAD SUPPORT )=----#
+  # services.xserver.libinput.enable = true;
+
   #----==========================----#
+
+  #----=[ FIREWALL ]=----#
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -250,13 +305,13 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  # system.copySystemConfiguration = true;
+  #----==========================----#
+  
+  #----=[ NIXOS VERSION ]=----#
 
-  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.05";
+
+  #----==========================----#
 
   #----=[ HYPRLAND ]=----#
 
@@ -297,17 +352,14 @@
   environment.variables.XCURSOR_THEME = "Adwaita";
   environment.variables.XDG_DATA_DIRS = "$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share";
 
-
-
   #----==========================----#
 
-  ## Hardware Settings
+  #----=[ GRAPHICS ]=----#
   hardware = {
     # Opengl
     opengl.enable = true;
     nvidia.modesetting.enable = true;
   
   };
-
 }
 
