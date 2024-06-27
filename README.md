@@ -1,2 +1,2 @@
 # Hyprland
-Configs and setup for running Hyprland
+Configs and setup for running Hyprland and NixOS
