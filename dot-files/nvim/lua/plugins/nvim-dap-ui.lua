@@ -7,6 +7,8 @@ return {
     -- https://github.com/mfussenegger/nvim-dap
     'mfussenegger/nvim-dap',
     -- https://github.com/theHamsta/nvim-dap-virtual-text
+    'nvim-neotest/nvim-nio',
+    -- https://github.com/nvim-neotest/nvim-nio
     'theHamsta/nvim-dap-virtual-text', -- inline variable text while debugging
     -- https://github.com/nvim-telescope/telescope-dap.nvim
     'nvim-telescope/telescope-dap.nvim', -- telescope integration with dap

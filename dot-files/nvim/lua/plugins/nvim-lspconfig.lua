@@ -1,78 +1,39 @@
--- LSP Support
+-- lua/plugins/nvim-lspconfig.lua
 return {
-  -- LSP Configuration
-  -- https://github.com/neovim/nvim-lspconfig
-  'neovim/nvim-lspconfig',
-  event = 'VeryLazy',
+  "neovim/nvim-lspconfig",
   dependencies = {
-    -- LSP Management
-    -- https://github.com/williamboman/mason.nvim
-    { 'williamboman/mason.nvim' },
-    -- https://github.com/williamboman/mason-lspconfig.nvim
-    { 'williamboman/mason-lspconfig.nvim' },
-
-    -- Useful status updates for LSP
-    -- https://github.com/j-hui/fidget.nvim
-    { 'j-hui/fidget.nvim', opts = {} },
-
-    -- Additional lua configuration, makes nvim stuff amazing!
-    -- https://github.com/folke/neodev.nvim
-    {'folke/neodev.nvim' },
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    "hrsh7th/cmp-nvim-lsp",
   },
-  config = function ()
-    require('mason').setup()
-    require('mason-lspconfig').setup({
-      -- Install these LSPs automatically
-      ensure_installed = {
-        'bashls', -- requires npm to be installed
-        -- 'cssls', -- requires npm to be installed
-        -- 'html', -- requires npm to be installed
-        -- 'gradle_ls',
-        -- 'groovyls',
-        'lua_ls',
-        -- 'intelephense', -- requires npm to be installed
-        -- 'jsonls', -- requires npm to be installed
-        -- 'lemminx',
-        'marksman',
-        'quick_lint_js',
-        -- 'tsserver', -- requires npm to be installed
-        -- 'yamlls', -- requires npm to be installed
-      }
+  event = { "BufReadPre", "BufNewFile" },
+  config = function()
+    require("mason").setup()
+
+    -- Mason-lspconfig v2+: auto-enables installed servers unless you disable it.
+    require("mason-lspconfig").setup({
+      ensure_installed = { "lua_ls", "gopls", "pyright", "bashls" },
+      -- automatic_enable = true, -- default is true; set to false if you want to call vim.lsp.enable() yourself
     })
 
-    local lspconfig = require('lspconfig')
-    local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
-    local lsp_attach = function(client, bufnr)
-      -- Create your keybindings here...
-    end
+    local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-    -- Call setup on each LSP server
-    require('mason-lspconfig').setup_handlers({
-      function(server_name)
-        lspconfig[server_name].setup({
-          on_attach = lsp_attach,
-          capabilities = lsp_capabilities,
-          handlers = {
-            -- Add borders to LSP popups
-            ["textDocument/hover"] =  vim.lsp.with(vim.lsp.handlers.hover, {border = 'rounded'}),
-            ["textDocument/signatureHelp"] =  vim.lsp.with(vim.lsp.handlers.signature_help, {border = 'rounded' }),
-          }
-        })
-      end
+    -- Global defaults for ALL servers (Neovim 0.11+ API)
+    vim.lsp.config("*", {
+      capabilities = capabilities,
     })
 
-    -- Lua LSP settings
-    lspconfig.lua_ls.setup {
+    -- Per-server tweaks
+    vim.lsp.config("lua_ls", {
       settings = {
         Lua = {
-          diagnostics = {
-            -- Get the language server to recognize the `vim` global
-            globals = {'vim'},
-          },
+          diagnostics = { globals = { "vim" } },
         },
       },
-    }
+    })
 
-  end
+    -- If you disabled automatic_enable above, uncomment:
+    -- vim.lsp.enable({ "lua_ls", "gopls", "pyright", "bashls" })
+  end,
 }
 
