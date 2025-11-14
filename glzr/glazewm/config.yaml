@@ -153,13 +153,13 @@ binding_modes:
 keybindings:
   # Shift focus in a given direction.
   - commands: ['focus --direction left']
-    bindings: ['alt+h', 'alt+left']
+    bindings: ['alt+h']
   - commands: ['focus --direction right']
-    bindings: ['alt+l', 'alt+right']
+    bindings: ['alt+l']
   - commands: ['focus --direction up']
-    bindings: ['alt+k', 'alt+up']
+    bindings: ['alt+k']
   - commands: ['focus --direction down']
-    bindings: ['alt+j', 'alt+down']
+    bindings: ['alt+j']
 
   # Move focused window in a given direction.
   - commands: ['move --direction left']
@@ -235,8 +235,8 @@ keybindings:
   # Launch CMD terminal. Alternatively, use `shell-exec wt` or
   # `shell-exec %ProgramFiles%/Git/git-bash.exe` to start Windows
   # Terminal and Git Bash respectively.
-  - commands: ['shell-exec powershell']
-    bindings: ['alt+shift+enter']
+  #- commands: ['shell-exec powershell']
+  #  bindings: ['alt+shift+enter']
 
   # Focus the next/previous workspace defined in `workspaces` config.
   - commands: ['focus --next-workspace']
@@ -300,3 +300,5 @@ keybindings:
     bindings: ['alt+shift+o']
   - commands: ['move --workspace 9', 'focus --workspace 9']
     bindings: ['alt+shift+9']
+  - commands: ['move --workspace Terminal', 'focus --workspace 9']
+    bindings: ['alt+shift+enter']
